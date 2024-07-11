@@ -1,15 +1,16 @@
-FROM golang:1.22.3-alpine AS build
+FROM registry.cn-hangzhou.aliyuncs.com/acejilam/golang:1.22.3 AS build
 
 RUN mkdir /src
 WORKDIR /src
+ENV GOPROXY=https://goproxy.cn/,direct
 ADD go.mod go.mod
 ADD go.sum go.sum
-RUN go mod download
+# RUN go mod download
 
-ADD pkg pkg
-ADD cmd cmd
-ADD main.go main.go
-RUN go build -v .
+# ADD pkg pkg
+# ADD cmd cmd
+COPY . .
+# RUN go build  .
 
 FROM alpine
 COPY --from=build /src/kelemetry /usr/local/bin/kelemetry

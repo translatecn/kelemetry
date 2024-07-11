@@ -137,6 +137,7 @@ output/kelemetry: go.mod go.sum $(shell find $(FIND_PATH) -type f -name "*.go")
 	go build -v $(RACE_ARG) -gcflags=$(GCFLAGS) -ldflags=$(LDFLAGS) -o $@ $(BUILD_ARGS) .
 
 kind:
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build .
 	kind delete cluster --name tracetest
 	docker network create kind || true # create if not exist; if fail, next step will fail anyway
 	sed "s/host.docker.internal/$$( \

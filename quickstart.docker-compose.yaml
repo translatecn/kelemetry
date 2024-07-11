@@ -4,7 +4,9 @@
 version: "3"
 services:
   etcd:
-    image: quay.io/coreos/etcd:v3.4.33
+#    skopeo copy --all --insecure-policy docker://docker.io/library/golang:1.20-bullseye docker://registry.cn-hangzhou.aliyuncs.com/acejilam/golang:1.20-bullseye
+#    image: quay.io/coreos/etcd:v3.4.33
+    image: registry.cn-hangzhou.aliyuncs.com/acejilam/etcd:v3.4.33
     entrypoint: [etcd]
     command:
       - -name=main
@@ -24,7 +26,8 @@ services:
         limits:
           memory: 1G
   jaeger-query:
-    image: jaegertracing/jaeger-query:1.42
+#    image: jaegertracing/jaeger-query:1.42
+    image: registry.cn-hangzhou.aliyuncs.com/acejilam/jaeger-query:1.42
     environment:
       GRPC_STORAGE_SERVER: kelemetry:17271
       SPAN_STORAGE_TYPE: grpc-plugin
@@ -32,14 +35,16 @@ services:
       - 0.0.0.0:16686:16686
     restart: always
   jaeger-collector:
-    image: jaegertracing/jaeger-collector:1.42
+    image: registry.cn-hangzhou.aliyuncs.com/acejilam/jaeger-collector:1.42
+#    image: jaegertracing/jaeger-collector:1.42
     environment:
       COLLECTOR_OTLP_ENABLED: "true"
       SPAN_STORAGE_TYPE: grpc-plugin
       GRPC_STORAGE_SERVER: remote-badger:17271
     restart: always
   remote-badger:
-    image: jaegertracing/jaeger-remote-storage:1.42
+    image: registry.cn-hangzhou.aliyuncs.com/acejilam/jaeger-remote-storage:1.42
+#    image: jaegertracing/jaeger-remote-storage:1.42
     environment:
       SPAN_STORAGE_TYPE: badger
       BADGER_EPHEMERAL: "false"

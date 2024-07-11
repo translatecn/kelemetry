@@ -9,3 +9,4 @@ dump*.json
 /local
 /USAGE.txt
 node_modules
+kelemetry

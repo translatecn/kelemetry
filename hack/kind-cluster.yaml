@@ -7,7 +7,7 @@ networking:
   apiServerAddress: "0.0.0.0"
 nodes:
   - role: control-plane
-    image: kindest/node:v1.27.3
+    image: registry.cn-hangzhou.aliyuncs.com/acejilam/node:v1.27.3
     kubeadmConfigPatches:
       - |
         kind: ClusterConfiguration
@@ -28,4 +28,4 @@ nodes:
         containerPath: /mnt/audit
         readOnly: true
   - role: worker
-    image: kindest/node:v1.27.3
+    image: registry.cn-hangzhou.aliyuncs.com/acejilam/node:v1.27.3
