@@ -21,6 +21,8 @@ services:
     volumes:
       - etcd:/var/run/etcd/default.etcd
     restart: always
+    ports:
+      - 0.0.0.0:2379:2379
     deploy:
       resources:
         limits:
@@ -29,8 +31,8 @@ services:
 #    image: jaegertracing/jaeger-query:1.42
     image: registry.cn-hangzhou.aliyuncs.com/acejilam/jaeger-query:1.42
     environment:
-      GRPC_STORAGE_SERVER: kelemetry:17271
       SPAN_STORAGE_TYPE: grpc-plugin
+      GRPC_STORAGE_SERVER: kelemetry:17271
     ports:
       - 0.0.0.0:16686:16686
     restart: always
@@ -42,6 +44,8 @@ services:
       SPAN_STORAGE_TYPE: grpc-plugin
       GRPC_STORAGE_SERVER: remote-badger:17271
     restart: always
+    ports:
+      - 0.0.0.0:4317:4317
   remote-badger:
     image: registry.cn-hangzhou.aliyuncs.com/acejilam/jaeger-remote-storage:1.42
 #    image: jaegertracing/jaeger-remote-storage:1.42
@@ -50,6 +54,8 @@ services:
       BADGER_EPHEMERAL: "false"
       BADGER_DIRECTORY_KEY: /mnt/badger/key
       BADGER_DIRECTORY_VALUE: /mnt/badger/data
+    ports:
+      - 0.0.0.0:17271:17271
     volumes:
       - badger:/mnt/badger
     deploy:

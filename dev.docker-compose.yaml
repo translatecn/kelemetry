@@ -18,10 +18,10 @@ services:
       - -initial-cluster-token=etcd-cluster-1
       - -data-dir=/var/run/etcd/default.etcd
     volumes:
-      - etcd:/var/run/etcd/
-    ports:
-      - 2379:2379
+      - etcd:/var/run/etcd/default.etcd
     restart: always
+    ports:
+      - 0.0.0.0:2379:2379
     deploy:
       resources:
         limits:
@@ -55,7 +55,7 @@ services:
       BADGER_DIRECTORY_KEY: /mnt/badger/key
       BADGER_DIRECTORY_VALUE: /mnt/badger/data
     ports:
-      - 127.0.0.1:17272:17271
+      - 0.0.0.0:17271:17271
     volumes:
       - badger:/mnt/badger
     restart: always

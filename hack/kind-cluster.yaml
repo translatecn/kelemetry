@@ -8,6 +8,10 @@ networking:
 nodes:
   - role: control-plane
     image: registry.cn-hangzhou.aliyuncs.com/acejilam/node:v1.27.3
+    extraPortMappings:
+      - containerPort: 6443
+        hostPort: 6443
+        protocol: TCP
     kubeadmConfigPatches:
       - |
         kind: ClusterConfiguration
